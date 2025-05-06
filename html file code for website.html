@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Money - Finance Tools</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #000000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      background: #111;
+      color: #ff1744;
+      width: 100%;
+      text-align: center;
+      padding: 1.5rem 1rem 1rem;
+      font-size: 1.7rem;
+      box-shadow: 0 2px 10px rgba(255, 23, 68, 0.5);
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px #ff1744;
+    }
+    .subtitle {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      color: #ff5252;
+      text-shadow: 0 0 5px #ff1744;
+    }
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+      max-width: 900px;
+      width: 100%;
+    }
+    .tool-button {
+      background-color: #1a1a1a;
+      border: 1px solid #ff1744;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 10px rgba(255, 23, 68, 0.3);
+      color: #ff5252;
+      text-shadow: 0 0 5px #ff1744;
+    }
+    .tool-button:hover {
+      background-color: #2b2b2b;
+      box-shadow: 0 0 15px rgba(255, 23, 68, 0.6);
+    }
+    footer {
+      margin-top: auto;
+      background-color: #111;
+      padding: 1rem;
+      text-align: center;
+      width: 100%;
+      font-size: 0.9rem;
+      color: #ff1744;
+      text-shadow: 0 0 5px #ff1744;
+    }
+    .calculator-section {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      max-width: 900px;
+      width: 100%;
+    }
+    .active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Smart Money – Smart Finance Tools for Smarter Life
+    <div class="subtitle">Created by Devang Parashar – Empowering Smart Finance Decisions</div>
+  </header>
+  <div class="tools">
+    <div class="tool-button" onclick="showCalculator('fd')">FD Calculator</div>
+    <div class="tool-button" onclick="showCalculator('rd')">RD Calculator</div>
+    <div class="tool-button" onclick="showCalculator('sip')">SIP Calculator</div>
+    <div class="tool-button" onclick="showCalculator('emi')">EMI Calculator</div>
+    <div class="tool-button" onclick="showCalculator('loan')">Loan Eligibility</div>
+    <div class="tool-button" onclick="showCalculator('currency')">Currency Converter</div>
+    <div class="tool-button" onclick="showCalculator('gold')">Gold/Silver Price</div>
+  </div>
+  
+  <!-- FD Calculator -->
+  <div id="fd" class="calculator-section">
+    <h2>FD Calculator</h2>
+    <form>
+      <input type="number" id="fd-principal" placeholder="Principal Amount"><br><br>
+      <input type="number" id="fd-rate" placeholder="Interest Rate"><br><br>
+      <input type="number" id="fd-time" placeholder="Time Period (in years)"><br><br>
+      <button type="button" onclick="calculateFD()">Calculate</button>
+    </form>
+    <p id="fd-result"></p>
+  </div>
+
+  <!-- RD Calculator -->
+  <div id="rd" class="calculator-section">
+    <h2>RD Calculator</h2>
+    <form>
+      <input type="number" id="rd-principal" placeholder="Monthly Deposit"><br><br>
+      <input type="number" id="rd-rate" placeholder="Interest Rate"><br><br>
+      <input type="number" id="rd-time" placeholder="Time Period (in months)"><br><br>
+      <button type="button" onclick="calculateRD()">Calculate</button>
+    </form>
+    <p id="rd-result"></p>
+  </div>
+
+  <!-- SIP Calculator -->
+  <div id="sip" class="calculator-section">
+    <h2>SIP Calculator</h2>
+    <form>
+      <input type="number" id="sip-principal" placeholder="Monthly Investment"><br><br>
+      <input type="number" id="sip-rate" placeholder="Expected Rate of Return"><br><br>
+      <input type="number" id="sip-time" placeholder="Time Period (in years)"><br><br>
+      <button type="button" onclick="calculateSIP()">Calculate</button>
+    </form>
+    <p id="sip-result"></p>
+  </div>
+
+  <!-- EMI Calculator -->
+  <div id="emi" class="calculator-section">
+    <h2>EMI Calculator</h2>
+    <form>
+      <input type="number" id="emi-principal" placeholder="Loan Amount"><br><br>
+      <input type="number" id="emi-rate" placeholder="Interest Rate"><br><br>
+      <input type="number" id="emi-time" placeholder="Loan Tenure (in months)"><br><br>
+      <button type="button" onclick="calculateEMI()">Calculate</button>
+    </form>
+    <p id="emi-result"></p>
+  </div>
+
+  <!-- Loan Eligibility Calculator -->
+  <div id="loan" class="calculator-section">
+    <h2>Loan Eligibility Calculator</h2>
+    <form>
+      <input type="number" id="loan-income" placeholder="Monthly Income"><br><br>
+      <input type="number" id="loan-emis" placeholder="EMIs (if any)"><br><br>
+      <input type="number" id="loan-other" placeholder="Other Monthly Expenses"><br><br>
+      <button type="button" onclick="calculateLoanEligibility()">Calculate</button>
+    </form>
+    <p id="loan-result"></p>
+  </div>
+
+  <!-- Currency Converter -->
+  <div id="currency" class="calculator-section">
+    <h2>Currency Converter</h2>
+    <form>
+      <input type="number" id="currency-amount" placeholder="Amount"><br><br>
+      <select id="currency-from">
+        <option value="USD">USD</option>
+        <option value="INR">INR</option>
+        <option value="EUR">EUR</option>
+      </select>
+      <select id="currency-to">
+        <option value="USD">USD</option>
+        <option value="INR">INR</option>
+        <option value="EUR">EUR</option>
+      </select><br><br>
+      <button type="button" onclick="convertCurrency()">Convert</button>
+    </form>
+    <p id="currency-result"></p>
+  </div>
+
+  <!-- Gold/Silver Price -->
+  <div id="gold" class="calculator-section">
+    <h2>Gold/Silver Price</h2>
+    <form>
+      <input type="number" id="gold-quantity" placeholder="Quantity in grams"><br><br>
+      <button type="button" onclick="getGoldPrice()">Get Price</button>
+    </form>
+    <p id="gold-result"></p>
+  </div>
+
+  <footer>
+    All rights reserved © Devang Parashar
+  </footer>
+
+  <script>
+    function showCalculator(calculator) {
+      const sections = document.querySelectorAll('.calculator-section');
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(calculator).classList.add('active');
+    }
+
+    function calculateFD() {
+      const principal = parseFloat(document.getElementById('fd-principal').value);
+      const rate = parseFloat(document.getElementById('fd-rate').value);
+      const time = parseFloat(document.getElementById('fd-time').value);
+      const interest = (principal * rate * time) / 100;
+      document.getElementById('fd-result').innerText = `Interest: ₹${interest.toFixed(2)}`;
+    }
+
+    function calculateRD() {
+      const principal = parseFloat(document.getElementById('rd-principal').value);
+      const rate = parseFloat(document.getElementById('rd-rate').value);
+      const time = parseFloat(document.getElementById('rd-time').value);
+      const interest = (principal * rate * time) / 100;
+      document.getElementById('rd-result').innerText = `Interest: ₹${interest.toFixed(2)}`;
+    }
+
+    function calculateSIP() {
+      const principal = parseFloat(document.getElementById('sip-principal').value);
+      const rate = parseFloat(document.getElementById('sip-rate').value);
+      const time = parseFloat(document.getElementById('sip-time').value);
+      const futureValue = principal * (1 + (rate / 100)) ** time;
+      document.getElementById('sip-result').innerText = `Future Value: ₹${futureValue.toFixed(2)}`;
+    }
+
+    function calculateEMI() {
+      const principal = parseFloat(document.getElementById('emi-principal').value);
+      const rate = parseFloat(document.getElementById('emi-rate').value);
+      const time = parseFloat(document.getElementById('emi-time').value);
+      const emi = (principal * rate * (1 + rate) ** time) / (((1 + rate) ** time) - 1);
+      document.getElementById('emi-result').innerText = `EMI: ₹${emi.toFixed(2)}`;
+    }
+
+    function calculateLoanEligibility() {
+      const income = parseFloat(document.getElementById('loan-income').value);
+      const emis = parseFloat(document.getElementById('loan-emis').value);
+      const other = parseFloat(document.getElementById('loan-other').value);
+      const loanEligibility = (income - emis - other) * 12;
+      document.getElementById('loan-result').innerText = `Loan Eligibility: ₹${loanEligibility.toFixed(2)}`;
+    }
+
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById('currency-amount').value);
+      const from = document.getElementById('currency-from').value;
+      const to = document.getElementById('currency-to').value;
+      const exchangeRate = 1;  // Example, replace with real exchange rate logic
+      const result = amount * exchangeRate;
+      document.getElementById('currency-result').innerText = `Converted Amount: ${result.toFixed(2)} ${to}`;
+    }
+
+    function getGoldPrice() {
+      const quantity = parseFloat(document.getElementById('gold-quantity').value);
+      const goldPricePerGram = 5000; // Example, replace with real price logic
+      const price = quantity * goldPricePerGram;
+      document.getElementById('gold-result').innerText = `Price: ₹${price.toFixed(2)}`;
+    }
+  </script>
+
+</body></html>
